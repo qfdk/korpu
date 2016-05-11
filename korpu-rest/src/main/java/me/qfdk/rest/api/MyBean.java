@@ -1,6 +1,5 @@
 package me.qfdk.rest.api;
 
-import java.io.Serializable;
 
 /**
  * Created by qfdk on 16/5/10.
@@ -30,12 +29,5 @@ public class MyBean {
     }
     public void setAge(int age) {
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb=new StringBuilder();
-        sb.append(name);
-        return sb.toString();
     }
 }

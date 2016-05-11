@@ -39,7 +39,6 @@
             MyBean a=new MyBean("sasa",1);
             MyBean b=new MyBean("sasa",2);
             MyBean c=new MyBean("sasa",3);
-            a.setName("ss");
             l.add(a);
             l.add(b);
             l.add(c);
@@ -47,19 +46,17 @@
 
         }
 
-        public List<Metadata> getFiles()  {
-            List<Metadata> l=new ArrayList<>();
-            int i=0;
+        public List<String> getFiles()  {
+            List<String> l=new ArrayList<>();
             try {
                 ListFolderResult result = client.files().listFolder("");
                 while (true) {
                     for (Metadata metadata : result.getEntries()) {
-//                        l.add(new MyBean(metadata.getName(),i++));
-                        l.add(metadata);
-//                        System.out.println(metadata);
+                        l.add(metadata.toStringMultiline());
+                        System.out.println(result.getEntries());
                     }
+              //      l.addAll(result.getEntries());
                     if (!result.getHasMore()) {
-                        System.out.println(l.size());
                         return l;
                     }
                     result = client.files().listFolderContinue(result.getCursor());
