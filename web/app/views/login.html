@@ -1,0 +1,22 @@
+<form name="loginForm" novalidate  ng-controller="LoginCtrl" rc-submit="login()"> 
+ <div class="form-group" 
+   ng-class="{'has-error': rc.loginForm.needsAttention(loginForm.username)}"> 
+  <input class="form-control" name="username" type="text" 
+    placeholder="Username" required ng-model="session.username" /> 
+  <span class="help-block" 
+    ng-show="rc.form.needsAttention(loginForm.username) && loginForm.username.$error.required">Required</span> 
+ </div> 
+ <div class="form-group" 
+   ng-class="{'has-error': rc.loginForm.needsAttention(loginForm.password)}"> 
+  <input class="form-control" name="password" type="password" 
+    placeholder="Password" required ng-model="session.password" /> 
+  <span class="help-block" 
+    ng-show="rc.form.needsAttention(loginForm.password) && loginForm.password.$error.required">Required</span> 
+ </div> 
+ <div class="form-group"> 
+  <button type="submit" class="btn btn-primary pull-right" 
+    value="Login" title="Login"> 
+   <span>Login</span> 
+  </button> 
+ </div> 
+</form>

@@ -1,0 +1,98 @@
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newFile"><span class="glyphicon glyphicon-folder-close"></span> New Dir</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload"><span class="glyphicon glyphicon-send"></span> Upload</button>
+<!-- Modal New dir-->
+<div class="modal fade" id="newFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Dir</h4>
+            </div>
+            <div class="modal-body">
+                <label for="name">Name : </label>
+                <input id="name" type="text" class="form-control" value="new file">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal New dir-->
+<div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Upload a file</h4>
+            </div>
+            <div class="modal-body">
+                <label for="file">Choose a file : </label>
+                <input type="file" id="file"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div ng-controller="DashboardCtrl">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Num</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat=" g in google">
+                <th scope="row">{{ $index+1 }}</th>
+                <td>{{g.name}}</td>
+                <td>Google Drive</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+ Info</a></li>
+                            <li><a href="#">Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat=" d in dropbox">
+                <th scope="row">{{ $index+1 }}</th>
+                <td>{{d.path}}</td>
+                <td>Dropbox</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="http://localhost/proxy.php?url=http://localhost:8080/api/v1/detailFile?name={{d.path}}">
+                                <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Info
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"> <span class="glyphicon glyphicon-trash"></span> Remove</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>{{ google.length+dropbox.length}}-- {{ user.emailAddress}}</p>
+</div>
