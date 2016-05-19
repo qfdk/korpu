@@ -5,12 +5,6 @@
 Dropbox + Google 
 
 
-	JXS+JXW
-	mvn archetype:generate -DarchetypeArtifactId=jersey-quickstart-webapp -DarchetypeGroupId=org.glassfish.jersey.archetypes -DinteractiveMode=false -DgroupId=me.qfdk -DartifactId=korpu-rest -Dpackage=me.qfdk.rest -DarchetypeVersion=2.16
-
-
-tech: JAVA
-
 ## Dir
 
 - Web
@@ -20,11 +14,15 @@ tech: JAVA
 
 ## KÖRPÜ-REST
 
-Lancer le serveur, il faut avoir le fichier config
+`korpu-rest.war` => jetty or tomcat or `docker`
 
-URL: http://localhost:8080/api/v1
+`conf` => dropbox.xml
 
-le retour en format json.
+Example => URL: http://localhost:8080/api/v1/{metode}
+
+## List des méthodes
+
+* Format normal
 
 ```json
 // success
@@ -32,12 +30,97 @@ le retour en format json.
 	"dropbox":[],
 	"google":[]
 }
-
 // cas error
 {
 	"error":msg
 }
 ```
+
+* callbackDropbox
+    
+```json
+{
+	"access_token":"xxx",
+	"uid":"xxx",
+	"token_type":"bearer"
+}
+
+```
+ 
+* callbackGoogle
+
+```json
+{
+	"access_token":"xxx",
+	"uid":"xxx",
+	"token_type":"bearer"
+}
+```
+
+* ls
+
+```json
+{
+  "dropbox": {
+    "thumb_exists": false,
+    "path": "\/",
+    "size": "0 bytes",
+    "contents": [
+      {
+        "thumb_exists": false,
+        "path": "\/dotfiles",
+        "rev": "5b3a041b6cba",
+        "size": "0 bytes",
+        "read_only": false,
+        "is_dir": true,
+        "bytes": 0,
+        "modifier": null,
+        "root": "dropbox",
+        "icon": "folder",
+        "modified": "Sun, 13 Mar 2016 18:28:45 +0000",
+        "revision": 23354
+      },...}
+    "google":{
+    	regarde sur google
+    	}
+
+```
+
+*   info
+
+```json
+{
+	"dropbox":{...},
+	"google":{...}
+}
+```
+
+*   detailFile(String file);
+
+```json
+{
+	"dropbox":{...},
+	"google":{...}
+}
+
+```
+
+*   rm(String file) =>api/v1/rm?name=xxx
+
+```
+{
+	"dropbox":{...},
+	"google":{...}
+}
+```
+
+pas envie de tous détailler, reagrde `Api.java`
+
+* mv(String from,String to)
+* mkdir(String dir)
+* share(String name)
+* login(user,passwd)
+* upload()
 
 ## Web
 
@@ -45,6 +128,9 @@ Angular js
 
 
 ![img1](./img/1.png)
+![img1](./img/2.png)
+![img1](./img/3.png)
+
 
 ## Licence
 

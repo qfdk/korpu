@@ -3,15 +3,18 @@ package me.qfdk.rest.entity;
 import me.qfdk.rest.tools.Tools;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
 /**
+ *
+ * Google Drive
  * Created by qfdk on 16/5/15.
+ *
  */
-public class Google implements Opetration {
+class Google implements Operation {
 
     private String client_id=null;
     private String client_secret=null;
@@ -28,7 +31,7 @@ public class Google implements Opetration {
         this.redirect_uri=json.getProperty("redirect_uri");
     }
 
-    public static Google getInstance()
+    static Google getInstance()
     {
         if(instance==null){
             instance=new Google();
@@ -59,36 +62,101 @@ public class Google implements Opetration {
         if(this.my_token==null)
         {
             String res=Tools.sendPost("https://www.googleapis.com/oauth2/v3/token",map);
-
             JSONObject json=new JSONObject(res);
             System.out.println(json);
             this.my_token=json.getString("access_token");
             return  json;
         }
-        return  new JSONObject("error:aready login");
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("error","already login");
+        return jsonObject;
+    }
+
+
+    @Override
+    public JSONObject ls() {
+        String query= null;
+        JSONObject jsonObject=new JSONObject();
+        try {
+            query = Tools.sendGet("https://www.googleapis.com/drive/v3/files?access_token="+this.my_token);
+        } catch (Exception e) {
+            jsonObject.put("error",e);
+        }
+        assert query != null;
+        return new JSONObject(query);
     }
 
     @Override
     public JSONObject getInfo() {
-        String ret= null;
+        String query = null;
+        JSONObject jsonObject = new JSONObject();
         try {
-            ret = Tools.sendGet("https://www.googleapis.com/drive/v3/files?access_token="+this.my_token);
+            query = Tools.sendGet("https://www.googleapis.com/drive/v2/about?access_token="+this.my_token);
         } catch (Exception e) {
-            e.printStackTrace();
+            jsonObject.put("error",e);
         }
-
-        return new JSONObject(ret);
+        return new JSONObject(query);
     }
 
     @Override
-    public JSONObject getFiles() {
-        String ret= null;
+    public JSONObject detailFile(String file) {
+        String query;
         try {
-            ret = Tools.sendGet("https://www.googleapis.com/drive/v3/files?access_token="+this.my_token);
+            query = Tools.sendGet("https://www.googleapis.com/drive/v2/files/"+file+"?access_token="+this.my_token);
         } catch (Exception e) {
-            e.printStackTrace();
+            JSONObject error = new JSONObject();
+            error.put("error","not found");
+            return error;
         }
-
-        return new JSONObject(ret);
+        return new JSONObject(query);
     }
+
+    @Override
+    public JSONObject rm(String file) {
+        String res;
+        try {
+            res = Tools.sendDel("https://www.googleapis.com/drive/v2/files/"+file+"?access_token="+this.my_token);
+        } catch (Exception e) {
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("error","problem");
+            return jsonObject;
+        }
+        return new JSONObject(res);
+    }
+
+    @Override
+    public JSONObject mv(String from, String to) {
+
+//        Map<String, String> map = new TreeMap<>();
+//        map.put("addParents",to);
+//        map.put("access_token", my_token);
+//        map.put("removeParents",from);
+//        map.put("filId",from);
+//        String res = null;
+//        try {
+//            res = Tools.sendPost("https://api.dropboxapi.com/1/fileops/create_folder", map);
+//        } catch (Exception e) {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("error", "problem");
+//            return jsonObject;
+//        }
+//        JSONObject json = new JSONObject(res);
+        return null;
+    }
+
+    @Override
+    public JSONObject mkdir(String dir) {
+        return null;
+    }
+
+    @Override
+    public JSONObject upload(String path, InputStream inputStream) {
+        return null;
+    }
+
+    @Override
+    public JSONObject share(String file) {
+        return null;
+    }
+
 }
