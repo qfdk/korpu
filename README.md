@@ -20,6 +20,10 @@ Dropbox + Google
 
 Example => URL: http://localhost:8080/api/v1/{metode}
 
+Resoudre pb de CORS 500 => proxy.php
+
+http://url/proxy.php?url=http://localhost:8080/api/v1/{metode}
+
 ## List des méthodes
 
 * Format normal
