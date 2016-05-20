@@ -27,6 +27,10 @@ angular
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl',
       })
+      .when('/info', {
+        templateUrl: 'views/info.html',
+        controller: 'InfoCtrl',
+      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
@@ -39,3 +43,9 @@ angular
         redirectTo: '/'
       });
   });
+  
+  angular.module('korpu').filter('cut', function () {
+        return function (value) {
+          return value.substr(1,value.length);
+        };
+    });

@@ -99,6 +99,11 @@ class Google implements Operation {
     }
 
     @Override
+    public JSONObject get_space_usage() {
+        return null;
+    }
+
+    @Override
     public JSONObject detailFile(String file) {
         String query;
         try {
@@ -127,20 +132,6 @@ class Google implements Operation {
     @Override
     public JSONObject mv(String from, String to) {
 
-//        Map<String, String> map = new TreeMap<>();
-//        map.put("addParents",to);
-//        map.put("access_token", my_token);
-//        map.put("removeParents",from);
-//        map.put("filId",from);
-//        String res = null;
-//        try {
-//            res = Tools.sendPost("https://api.dropboxapi.com/1/fileops/create_folder", map);
-//        } catch (Exception e) {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("error", "problem");
-//            return jsonObject;
-//        }
-//        JSONObject json = new JSONObject(res);
         return null;
     }
 

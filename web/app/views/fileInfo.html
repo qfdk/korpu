@@ -64,7 +64,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Move" />
+                    <input type="submit" class="btn btn-danger" value="Remove" />
                 </div>
             </form>
         </div>
@@ -88,23 +88,6 @@
     </div>
 </div>
 
-<!-- Modal info-->
-<div class="modal fade" id="infoFile2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Detail du dir</h4>
-            </div>
-            <ul class="list-group" id="myFile2">
-            </ul>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal share-->
 <div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -120,6 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Save" />
             </div>
         </div>
     </div>
@@ -220,7 +204,6 @@
             var colors=['success','info','warning','danger','default'];
             if(code === "success")
             {
-                console.log(data);
                 $('#myFile').empty();
                 var target=$('#myFile');
                 var icon_dir="<span class=\"glyphicon glyphicon-folder-open\"></span>";
@@ -238,11 +221,12 @@
                             if(tmp[i].is_dir)
                             {
                                 var data="data-url=\"http://localhost:8080/api/v1/detailFile?name="+tmp[i].path+"\""; 
-                                var root="onclick=\"getInfo2(this);\" data-target=\"#infoFile2\"data-toggle=\"modal\""+data;
-                                target.append("<li href=\"http://localhost:8080/api/v1/detailFile?name="+tmp[i].path+"\" class=\"list-group-item list-group-item-"+colors[i%5]+"\""+root+">"+icon_dir+"&nbsp;"+tmp[i].path+"</li>");
+                                var root="onclick=\"getInfo(this);\" data-target=\"#infoFile\"data-toggle=\"modal\""+data;
+                                target.append("<li href=\"\" class=\"list-group-item list-group-item-"+colors[i%5]+"\""+root+">"+icon_dir+"&nbsp;"+tmp[i].path+"</li>");
                             }else
                             {
-                            target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"+icon_file+"&nbsp;"+tmp[i].path+"&nbsp;"+tmp[i].size+"</li>");
+                            target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"
+                            +icon_file+"&nbsp;"+tmp[i].path+"&nbsp;"+tmp[i].size+"</li>");
                             }
                         }
                       }
@@ -251,8 +235,10 @@
                      target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"+data.dropbox.path+"&nbsp;<span class=\"glyphicon glyphicon-paperclip\"></span>"+data.dropbox.size+"</li>");
                 }
             }
+        
+
              var google = data.google;
-             if(undefined!==google.title){
+             if(google.title!==undefined){
                      $('#myFile').empty();
                  target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"+"&nbsp;"+google.title+"</li>");
 
@@ -261,49 +247,6 @@
         });
     }
     
-       function getInfo2(data)
-    {
-        // console.log(data);
-        var url= "http://localhost/proxy.php?url="+data.getAttribute("data-url");
-        $.getJSON(url,function(data,code){
-            var colors=['success','info','warning','danger','default'];
-            if(code === "success")
-            {
-                console.log(data);
-                $('#myFile2').empty();
-                var target=$('#myFile2');
-                var icon_dir="<span class=\"glyphicon glyphicon-folder-open\"></span>";
-                var icon_file="<span class=\"glyphicon glyphicon-paperclip\"></span>";
-                
-                var tmp = data.dropbox;
-                if(tmp!==undefined)
-                {
-                    var tmp=tmp.contents;
-                    if(tmp!==undefined)
-                    {
-                        // multi fichiers
-                        for(var i=0;i<tmp.length;i++)
-                        {
-                            if(tmp[i].is_dir)
-                            {
-                                var data="data-url=\"http://localhost:8080/api/v1/detailFile?name="+tmp[i].path+"\""; 
-                                var root="onclick=\"getInfo2(this);\" data-target=\"#infoFile2\"data-toggle=\"modal\""+data;
-                                target.append("<li href=\"http://localhost:8080/api/v1/detailFile?name="+tmp[i].path+"\" class=\"list-group-item list-group-item-"+colors[i%5]+"\""+root+">"+icon_dir+"&nbsp;"+tmp[i].path+"</li>");
-                            }else
-                            {
-                            target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"+icon_file+"&nbsp;"+tmp[i].path+"&nbsp;"+tmp[i].size+"</li>");
-                            }
-                        }
-                      }
-            else{
-                    // seul
-                     target.append("<li class=\"list-group-item list-group-item-"+colors[i%5]+"\">"+data.dropbox.path+"&nbsp;<span class=\"glyphicon glyphicon-paperclip\"></span>"+data.dropbox.size+"</li>");
-                }
-            }
-            }
-        });
-    }
-     
     function rename(s){
         console.log(s.getAttribute("data-coucou"));
         $("#from").attr("value",s.getAttribute("data-coucou"));

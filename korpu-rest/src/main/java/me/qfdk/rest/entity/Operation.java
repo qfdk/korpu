@@ -20,6 +20,8 @@ interface Operation {
     JSONObject ls();
     // space user
     JSONObject getInfo();
+    // sespace
+    JSONObject get_space_usage();
     // detail file
     JSONObject detailFile(String file);
     // rm file

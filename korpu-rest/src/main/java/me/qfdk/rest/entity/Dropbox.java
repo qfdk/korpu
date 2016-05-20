@@ -97,6 +97,21 @@ class Dropbox implements Operation {
     }
 
     @Override
+    public JSONObject get_space_usage() {
+        String query = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            Map<String,String> map=new TreeMap<>();
+            query = Tools.sendPostToken("https://api.dropboxapi.com/2/users/get_space_usage",map,this.my_token);
+            System.out.println("--->"+query);
+        } catch (Exception e) {
+            jsonObject.put("error", e.toString());
+            return new JSONObject(jsonObject);
+        }
+        return new JSONObject(query);
+    }
+
+    @Override
     public JSONObject detailFile(String file) {
         String query = null;
         JSONObject jsonObject = new JSONObject();
@@ -167,22 +182,24 @@ class Dropbox implements Operation {
 
     @Override
     public JSONObject upload(String path, InputStream inputStream) {
-        Map<String, String> map = new TreeMap<>();
-        map.put("path", path);
-        map.put("mode","add");
-        map.put("autorename","true");
-        map.put("mute","false");
-        map.put("access_token", my_token);
+
+//        Map<String, String> map = new TreeMap<>();
+//        map.put("path", path);
+//        map.put("mode","add");
+//        map.put("autorename","true");
+//        map.put("mute","false");
+//        map.put("access_token", my_token);
+
         String res = null;
         try {
-            res = Tools.sendUpload("https://content.dropboxapi.com/2/files/upload", map,inputStream);
+            res = Tools.sendUpload("https://content.dropboxapi.com/1/files_put/auto/"+path+"?param=val&access_token="+my_token,inputStream);
         } catch (Exception e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("error", "problem");
             return jsonObject;
         }
-        JSONObject json = new JSONObject(res);
-        return json;
+        System.out.println(res);
+        return new JSONObject(res);
     }
 
 

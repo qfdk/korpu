@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>conf/dropbox.xml</comment>
+    <entry key="client_id">XXXXXX</entry>
+    <entry key="client_secret">XXXXX</entry>
+    <entry key="redirect_uri">http://localhost:8080/api/v1/callbackDropbox</entry>
+    <entry key="grant_type">authorization_code</entry>
+    <entry key="code">authorization_code</entry>
+</properties>

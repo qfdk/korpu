@@ -11,12 +11,10 @@
     <title>Logined</title>
 </head>
 <body>
-<form method="POST" action="https://api.dropboxapi.com/1/oauth2/token">
-    <input type="text" name="code" value="V4jasYnvCqoAAAAAAACMfm7GgJa9u-QSQXihN_frukQ">
-    <input type="text" name="grant_type" value="authorization_code">
-    <input type="text" name="client_secret" value="f0mbiavhm1gvlae">
-    <input type="text" name="client_id" value="yupwnr7l9luikkb">
-    <input type="text" name="redirect_uri" value="http://localhost:8080/api/dropbox/v1/">
+<form method="POST" action="https://api.dropboxapi.com/2/users/get_space_usage?authorization">
+    <label>
+        <input type="text" name="access_token" value="V4jasYnvCqoAAAAAAACNN4c-ZH1WjYJFgmfhFgRefJ5w7SWUUwhwW9-z23BEUOih">
+    </label>
     <input type="submit" value="send">
 
 </form>

@@ -1,0 +1,37 @@
+    <h2>Informations associées à vos comptes</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Dropbox</th>
+                <th>#</th>
+                <th>Google</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="active">
+                <th scope="row">Nom d'utilisateur</th>
+                <td>{{dropbox_nom}}</td>
+                <th scope="row">Nom d'utilisateur</th>
+                <td>{{google_nom}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Pays</th>
+                <td>{{dropbox_country}}</td>
+                <th scope="row">Pays</th>
+                <td>{{google_country}}</td>
+            </tr>
+            <tr class="success">
+                <th scope="row">Mail</th>
+                <td>{{dropbox_email}}</td>
+                <th scope="row">Mail</th>
+                <td>{{google_email}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Espace Total</th>
+                <td>{{dropbox_quotaInfo/1024/1024/1024}} GB</td>
+                <th scope="row">Espace Total</th>
+                <td>{{google_quotaInfo/1024/1024/1024}} GB</td>
+            </tr>
+        </tbody>
+    </table>
