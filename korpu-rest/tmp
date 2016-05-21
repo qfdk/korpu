@@ -1,0 +1,28 @@
+#! /usr/bin/python
+#-*- coding: utf-8 -*-
+import paramiko
+import threading
+
+def ssh2 (ip, userName, password):
+   try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(ip, 22, userName, password, timeout = 5)
+        print "[+] %s password is: %s"%(ip, password)
+   except:
+        print "[-] %s"%ip
+        
+if __name__ == '__main__':
+    ipText = open("ip.txt").read().split('\n')
+    ipList = []
+    for ip in ipText:
+        if ip != '':
+            ipList.append(ip.strip())
+    userName = "root"
+    password = "projet"
+    threads = []
+    print "Start..."
+    for i in ipList:
+        th = threading.Thread(target = ssh2,
+            args = (i, userName, password))
+        th.start()

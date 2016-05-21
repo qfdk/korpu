@@ -19,10 +19,9 @@ class Google implements Operation {
     private String client_id=null;
     private String client_secret=null;
     private String redirect_uri=null;
-
     private String my_token=null;
-
     private static Google instance =null;
+
 
     private Google() {
         Properties json= Tools.readConf("conf/google.xml");
@@ -131,13 +130,23 @@ class Google implements Operation {
 
     @Override
     public JSONObject mv(String from, String to) {
-
+        String res;
         return null;
     }
 
     @Override
     public JSONObject mkdir(String dir) {
-        return null;
+        Map<String,String> map = new TreeMap<>();
+        map.put(dir,"application/vnd.google-apps.folder");
+        String res;
+        try {
+            res=Tools.sendPost("https://www.googleapis.com/drive/v2/files?access_token=",map);
+        } catch (Exception e) {
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("error","problem");
+            return jsonObject;
+        }
+        return new JSONObject(res);
     }
 
     @Override
@@ -147,7 +156,17 @@ class Google implements Operation {
 
     @Override
     public JSONObject share(String file) {
-        return null;
+        Map<String,String> map = new TreeMap<>();
+        map.put("role", "owner");
+        map.put("type", "anyone");
+        String res;
+        try {
+            res=Tools.sendPost("https://www.googleapis.com/drive/v2/files/"+file+"/permissions?access_token="+my_token,map);
+        } catch (Exception e) {
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("error","problem");
+            return jsonObject;
+        }
+        return new JSONObject(res);
     }
-
 }
